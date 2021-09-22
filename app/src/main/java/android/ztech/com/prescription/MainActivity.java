@@ -440,6 +440,8 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
                         advices.setText(temp[3]);
                     else if (i == 4 && !temp[4].isEmpty() && !temp[4].contains("$"))
                         diagnosises2.setText(temp[4]);
+                    else if (i == 5 && !temp[5].isEmpty() && !temp[5].contains("$"))
+                        names.setText(temp[5]);
 
 
                 }
@@ -1906,7 +1908,7 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
             }
 
 
-        } else diagnosises.setText("");
+        }
 
         if (!loadedDiagnosis2.contains(diagnosises2.getText().toString())) {
             loadedDiagnosis2.add(diagnosises2.getText().toString());
@@ -2045,7 +2047,7 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         } else prescription += "$$";
 
 
-        prescription += advices.getText().toString()+"$$"+diagnosises2.getText().toString();
+        prescription += advices.getText().toString()+"$$"+diagnosises2.getText().toString()+"$$"+names.getText().toString();
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription." + diagnosises.getText().toString(), context.MODE_PRIVATE);
@@ -2408,6 +2410,16 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         }
     }
 
+    public void delName(View v) {
+
+        if (loadedName.contains(names.getText().toString())) {
+            loadedName.remove(names.getText().toString());
+            names.setText("");
+            nameAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedName);
+            names.setAdapter(nameAdapter);
+            new PostTask3().execute("");
+        }
+    }
     private class PostTask2 extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPreExecute() {
@@ -2441,6 +2453,7 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
 
 
                             FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_PRIVATE);
+
 
                             fos.write((loadedDiagnosis.get(i) + "\n").getBytes());
                             fos.close();
@@ -2488,7 +2501,87 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
 
         }
     }
+    private class PostTask3 extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarVisibility(true);
+        }
 
+        @Override
+        protected String doInBackground(String... params) {
+            String toBeEdited = params[0];
+
+
+            if (loadedName.size() == 0) {
+                try {
+
+
+                    FileOutputStream fos = openFileOutput(FILENAME_NAME, context.MODE_PRIVATE);
+
+                    fos.write("".getBytes());
+                    fos.close();
+
+
+                } catch (Exception e) {
+
+                }
+            } else {
+                for (int i = 0; i < loadedName.size(); i++) {
+
+                    if (i == 0) {
+                        try {
+
+
+                            FileOutputStream fos = openFileOutput(FILENAME_NAME, context.MODE_PRIVATE);
+
+
+                            fos.write((loadedName.get(i) + "\n").getBytes());
+                            fos.close();
+
+
+                        } catch (Exception e) {
+
+                        }
+
+                    } else {
+                        try {
+
+
+                            FileOutputStream fos = openFileOutput(FILENAME_NAME, context.MODE_APPEND);
+
+                            fos.write((loadedName.get(i) + "\n").getBytes());
+                            fos.close();
+
+
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressBarVisibility(false);
+
+
+        }
+    }
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

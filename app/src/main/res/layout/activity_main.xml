@@ -181,6 +181,13 @@
                             android:id="@+id/name"
                             android:inputType="textCapSentences"
                             />
+                        <Button
+                            android:layout_height="30dp"
+                            android:layout_width="30dp"
+                            android:text="D"
+                            android:textSize="10sp"
+                            android:onClick="delName"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
