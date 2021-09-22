@@ -16,8 +16,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.print.pdf.PrintedPdfDocument;
+
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -52,9 +54,7 @@ import java.util.List;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
-public class MainActivity extends AppCompatActivity  implements PasswordDialog.OnPositiveClickListener{
-
-
+public class MainActivity extends AppCompatActivity implements PasswordDialog.OnPositiveClickListener {
 
 
     boolean printActivty = false;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
     };
 
-    boolean doSympExist = false, doTestExist = false,isRegSavedOnce=false;
+    boolean doSympExist = false, doTestExist = false, isRegSavedOnce = false;
     int userSaveDrugLastIndex;
     String FILENAME_ADVICE = "android.ztech.com.prescription.advice_container_new_0";
     String FILENAME_NAME = "android.ztech.com.prescription.name_container_new";
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
     List<Integer> medicationIdArray = new ArrayList<>();
     List<Integer> commonIdArray = new ArrayList<Integer>();
 
-    ArrayAdapter<String> adapter, diag2Adapter, testAdapter, symptomsAdapter, adviceAdapter, nameAdapter, diagnosisAdapter,  emergenyAdviceAdapter;
+    ArrayAdapter<String> adapter, diag2Adapter, testAdapter, symptomsAdapter, adviceAdapter, nameAdapter, diagnosisAdapter, emergenyAdviceAdapter;
 
 
     List<String> loadedAdvice = new ArrayList<String>();
@@ -111,285 +111,29 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
     ArrayList<LinearLayout> tests = new ArrayList<>();
     LinearLayout deleter, test_deleter, symptom_deleter;
 
-    AutoCompleteTextView advices, diagnosises,diagnosises2, names;
+    AutoCompleteTextView advices, diagnosises, diagnosises2, names;
     TextView dateTextView;
     LinearLayout printPagePart;
-    LinearLayout.LayoutParams  drugParamsMax, drugParamsMedium, drugParamsMin;
+    LinearLayout.LayoutParams drugParamsMax, drugParamsMedium, drugParamsMin;
 
     utilityPrescription idGenerator;
     Context context;
     SpinnerAdapter shortcutsAdapter;
 
-    private class PostTask2 extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBarVisibility(true);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String toBeEdited = params[0];
-
-
-
-            if(loadedDiagnosis.size()==0)
-            {
-                try {
-
-
-                    FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_PRIVATE);
-
-                    fos.write("".getBytes());
-                    fos.close();
-
-
-                }
-                catch (Exception e) {
-
-                }
-            }
-
-            else {
-                for (int i = 0; i < loadedDiagnosis.size(); i++) {
-
-                    if(i==0) {
-                        try {
-
-
-                            FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_PRIVATE);
-
-                            fos.write((loadedDiagnosis.get(i) + "\n").getBytes());
-                            fos.close();
-
-
-                        } catch (Exception e) {
-
-                        }
-
-                    }
-
-                    else
-                    {
-                        try {
-
-
-                            FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_APPEND);
-
-                            fos.write((loadedDiagnosis.get(i) + "\n").getBytes());
-                            fos.close();
-
-
-                        } catch (Exception e) {
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-
-
-            return "All Done!";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progressBarVisibility(false);
-
-
-        }
-    }
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.*/
-    private class deleteDiag extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBarVisibility(true);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-
-            try {
-                FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS_2, context.MODE_PRIVATE);
-
-                for (int i = 0; i <loadedDiagnosis2.size(); i++) {
-
-                    fos.write((loadedDiagnosis2.get(i) + "\n").getBytes());
-                }
-
-                fos.close();
-
-
-            } catch (Exception e) {
-            }
-
-
-
-
-
-
-            return "All Done!";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progressBarVisibility(false);
-        }
-    }
-
-    private class deleteAdviceSugg extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBarVisibility(true);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-
-
-            try {
-                FileOutputStream fos = openFileOutput(FILENAME_ADVICE, context.MODE_PRIVATE);
-
-                for (int i = 0; i <loadedAdvice.size(); i++) {
-
-                    fos.write((loadedAdvice.get(i) + "\n").getBytes());
-                }
-
-                fos.close();
-
-
-            } catch (Exception e) {
-            }
-
-
-
-
-
-
-            return "All Done!";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progressBarVisibility(false);
-        }
-    }
-
-
-    // The definition of our task class
-    private class PostTask extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBarVisibility(true);
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String toBeEdited = params[0];
-
-
-            //loadedMedication.removeAll(Arrays.asList(getResources().getStringArray(R.array.med)));
-
-            try {
-                FileOutputStream fos = openFileOutput(FILENAME_MEDICATIONS, context.MODE_PRIVATE);
-
-                for (int i = 0; i <userSaveDrugLastIndex; i++) {
-
-                    fos.write((loadedMedication.get(i) + "\n").getBytes());
-                }
-
-                fos.close();
-
-
-            } catch (Exception e) {
-            }
-            //loadedMedication.addAll(Arrays.asList(getResources().getStringArray(R.array.med)));
-
-
-
-
-
-
-            return "All Done!";
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progressBarVisibility(false);
-        }
-    }
-
-
-
-
-    private void progressBarVisibility(boolean isBackgroundTaskRunning)
-    {
-        if(isBackgroundTaskRunning)
-        {
+    private void progressBarVisibility(boolean isBackgroundTaskRunning) {
+        if (isBackgroundTaskRunning) {
 
             Intent intentImplicit = new Intent(this, waitingActivity.class);
-            startActivityForResult(intentImplicit,1010);
+            startActivityForResult(intentImplicit, 1010);
 
 
-        }
-
-        else {
+        } else {
             finishActivity(1010);
-            Toast.makeText(this,"Deleted",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
 
         }
 
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -397,10 +141,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         setContentView(R.layout.activity_main);
 
 
-
         commonIdArray.add(R.id.name);
         commonIdArray.add(R.id.patientCell);
-        commonIdArray.add (R.id.years);
+        commonIdArray.add(R.id.years);
         commonIdArray.add(R.id.months);
         commonIdArray.add(R.id.days);
         commonIdArray.add(R.id.Diagnosis);
@@ -416,8 +159,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         years = (EditText) findViewById(R.id.years);
         weight = (EditText) findViewById(R.id.weight);
         //        emergency = (AutoCompleteTextView) findViewById(R.id.emergency);
-
-
 
 
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtException(MainActivity.this));
@@ -510,7 +251,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
         try {
 
-            FileInputStream fis = this.openFileInput(  FILENAME_DIAGNOSIS_2);
+            FileInputStream fis = this.openFileInput(FILENAME_DIAGNOSIS_2);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
 
@@ -611,8 +352,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
 
 
-
-
         try {
 
             FileInputStream fis = this.openFileInput(FILENAME_EMERGENGYADVICE);
@@ -637,17 +376,46 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
 
 
-        emergenyAdviceAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedEmergencyAdvice);
-        testAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item,
+        emergenyAdviceAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedEmergencyAdvice);
+        testAdapter = new ArrayAdapter<String>(this, R.layout.custom_item,
                 R.id.autoCompleteItem, loadedInvestigation);
         adapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedMedication);
-        symptomsAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedSymptoms);
-        adviceAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
+        symptomsAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedSymptoms);
+        adviceAdapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
         nameAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedName);
-        diagnosisAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedDiagnosis);
+        diagnosisAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedDiagnosis);
         advices.setAdapter(adviceAdapter);
         advices.setThreshold(1);
         names.setAdapter(nameAdapter);
+//        names.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription." + names.getText().toString(), context.MODE_PRIVATE);
+//                String[] temp;
+//                try {
+//                    temp = sharedPreferences
+//                            .getString("android.ztech.com.prescription." + names.getText().toString(), "").split("\\$\\$");
+//                } catch (Exception e) {
+//                    Toast.makeText(context, "Not found", Toast.LENGTH_LONG).show();
+//
+//                    return;
+//                }
+//                for (int i = 0; i < temp.length; i++) {
+//                    if (i == 0 && !temp[0].isEmpty()) add_symptoms(temp[0].split("\\$"));
+//                    else if (i == 1 && !temp[1].isEmpty()) add_test(temp[1].split("\\$"));
+//                    else if (i == 2 && !temp[2].isEmpty()) {
+//                        create_new_drug(temp[2].split("\\$"), null);
+//                    } else if (i == 3 && !temp[3].isEmpty() && !temp[3].contains("$"))
+//                        advices.setText(temp[3]);
+//                    else if (i == 4 && !temp[4].isEmpty()) diagnosises2.setText(temp[4]);
+//
+//
+//                }
+//                Toast.makeText(context, "Loaded " + "'" + names.getText().toString() + "'", Toast.LENGTH_LONG).show();
+////                    diagnosises.setText("");
+//
+//            }
+//        });
 
         diagnosises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -668,34 +436,29 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                     else if (i == 1 && !temp[1].isEmpty()) add_test(temp[1].split("\\$"));
                     else if (i == 2 && !temp[2].isEmpty()) {
                         create_new_drug(temp[2].split("\\$"), null);
-                    } else if (i == 3 && !temp[3].isEmpty() &&!temp[3].contains("$")) advices.setText(temp[3]);
+                    } else if (i == 3 && !temp[3].isEmpty() && !temp[3].contains("$"))
+                        advices.setText(temp[3]);
+                    else if (i == 4 && !temp[4].isEmpty() && !temp[4].contains("$"))
+                        diagnosises2.setText(temp[4]);
 
-                    //                    else if (i == 4 && !temp[4].isEmpty()) emergency.setText(temp[4]);
+
                 }
-
-
-
-                Toast.makeText(context, "Loaded "+"'"+diagnosises.getText().toString()+"'", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Loaded " + "'" + diagnosises.getText().toString() + "'", Toast.LENGTH_LONG).show();
 //                    diagnosises.setText("");
-
             }
         });
 
         firstActivity = (Activity) MainActivity.this;
         diagnosises.setAdapter(diagnosisAdapter);
 
-        diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2,  loadedDiagnosis2);
+        diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedDiagnosis2);
         diagnosises2.setAdapter(diag2Adapter);
-
         idGenerator = new utilityPrescription();
 
         deleter = (LinearLayout) findViewById(R.id.AddMedLayout);
         test_deleter = (LinearLayout) findViewById(R.id.tests);
-
-
-
         //        SpinnerHowManyTimesADay= getResources().getStringArray(R.array.banglaSuggestions);
-        shortcutsAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem,  replacements);
+        shortcutsAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, replacements);
         //        frequencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SpinnerHowManyTimesADay);
 
         context = this;
@@ -708,24 +471,12 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         drugParamsMin.setMargins(0, 40, 0, 0);
         drugParamsMax.setMargins(0, 30, 0, 0);
         drugParamsMedium.setMargins(0, 60, 0, 0);
-
-
-
-
-
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription.REG", context.MODE_PRIVATE);
         int regNo = sharedPreferences.getInt("android.ztech.com.prescription.REG", 1);
 
         ((TextView) findViewById(R.id.regNo)).setText(Integer.toString(regNo));
-
-
         Activity mainActivity = MainActivity.this;
-
-
         // Here, thisActivity is the current activity
-
-
-
         ViewTreeObserver vto = findViewById(R.id.ZscrollView).getViewTreeObserver();
 
         vto.addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
@@ -734,7 +485,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
 
                 focusedTextField = newFocus;
-
 
 
             }
@@ -750,63 +500,18 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                 });
 
 
-        PrintAttributes newAttributes =new PrintAttributes.Builder()
-                .setColorMode(PrintAttributes.COLOR_MODE_MONOCHROME).setMinMargins(new PrintAttributes.Margins(0,0,0,0))
+        PrintAttributes newAttributes = new PrintAttributes.Builder()
+                .setColorMode(PrintAttributes.COLOR_MODE_MONOCHROME).setMinMargins(new PrintAttributes.Margins(0, 0, 0, 0))
                 .setMediaSize(PrintAttributes.MediaSize.ISO_A4).build();
         mPdfDocument = new PrintedPdfDocument(context, newAttributes);
 
 
-
-       // create_new_drug(new View(this));
+        // create_new_drug(new View(this));
 
     }
-
-
-
-    private void stringProcessor(String string) {
-        linedAdvice.clear();
-        final int charLim = 91;
-
-        if (string.length() > charLim && (string.contains(" ") || string.contains("\n"))) {
-
-
-            int i = 0, spaceCharIndex;
-            while (true) {
-
-                if (string.length() - 1 - i >= charLim) {
-                    if (string.substring(i + charLim - 1, i + charLim).equals(" ") || string.substring(i + charLim - 1, i + charLim).equals("\n")) {
-                        linedAdvice.add(string.substring(i, i + charLim));
-                        i += charLim;
-                        Log.e("the i space", Integer.toString(i));
-
-                    } else {
-                        spaceCharIndex = i + charLim - 1;
-
-                        while (!string.substring(spaceCharIndex, spaceCharIndex + 1).equals(" ") && !string.substring(spaceCharIndex, spaceCharIndex + 1).equals("\n")) {
-                            spaceCharIndex--;
-                            Log.e("charlim :", Integer.toString(spaceCharIndex) + "isSpace?: " + string.substring(spaceCharIndex, spaceCharIndex + 1));
-                        }
-
-                        linedAdvice.add(string.substring(i, spaceCharIndex + 1));
-                        i = spaceCharIndex + 1;
-                        Log.e("the i no space", Integer.toString(i));
-
-                    }
-                } else {
-                    linedAdvice.add(string.substring(i));
-                    break;
-                }
-
-
-            }
-        } else linedAdvice.add(string);
-    }
-
 
     private void stringProcessorFlex(String string, int charLim) {
         linedAdvice.clear();
-
-
         if (string.length() > charLim && (string.contains(" ") || string.contains("\n"))) {
 
 
@@ -841,11 +546,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             }
         } else linedAdvice.add(string);
     }
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -854,8 +554,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -880,7 +578,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
     }
 
-
     public void autoPrescribe(View view) {
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription." + diagnosises.getText().toString(), context.MODE_PRIVATE);
         String[] temp;
@@ -903,20 +600,16 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             else if (i == 1 && !temp[1].isEmpty()) add_test(temp[1].split("\\$"));
             else if (i == 2 && !temp[2].isEmpty()) {
                 create_new_drug(temp[2].split("\\$"), null);
-            }
-
-            else if (i == 3 && !temp[3].isEmpty()&&!temp[3].contains("$")) advices.setText(temp[3]);
+            } else if (i == 3 && !temp[3].isEmpty() && !temp[3].contains("$"))
+                advices.setText(temp[3]);
             //            else if (i == 4 && !temp[4].isEmpty()) emergency.setText(temp[4]);
         }
 
     }
 
-
-
-
     private int drawAndComputePages() {
 
-         // here 30 = 1 c. m
+        // here 30 = 1 c. m
         int titleBaseLine = 60, pageNumber = 1;
         //int leftMargin = 100;
         final int lineGap = 3;
@@ -929,44 +622,41 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription.REG", context.MODE_PRIVATE);
         int regNo = sharedPreferences.getInt("android.ztech.com.prescription.REG", 1);
         paint.setTextSize(15);
-       // canvas.drawText("নবজাতক, শিশু  ও  কিশোর রোগ বিশেষজ্ঞ", 72*2.4f, titleBaseLine,paint);
-        titleBaseLine+=30;
+        // canvas.drawText("নবজাতক, শিশু  ও  কিশোর রোগ বিশেষজ্ঞ", 72*2.4f, titleBaseLine,paint);
+        titleBaseLine += 30;
 
         paint.setColor(Color.BLACK);
         float left = 72 * 0.5f;
         float left_rightAl = 72 * 5.5f;
-        float leftTextStart = left+ 72 * 0.3f;
+        float leftTextStart = left + 72 * 0.3f;
         paint.setTextSize(16);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("অধ্যক্ষ  ডাঃ   মোঃ   আবু   সুফিয়ান", left, titleBaseLine,paint);
+        canvas.drawText("অধ্যক্ষ  ডাঃ   মোঃ   আবু   সুফিয়ান", left, titleBaseLine, paint);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 
-        titleBaseLine+=20;
+        titleBaseLine += 20;
         paint.setTextSize(12);
-        canvas.drawText("এমবিবিএস,   ডিসিএইচ,   এফসিপিএস", left, titleBaseLine,paint);
-        titleBaseLine+=15;
-        canvas.drawText("শেখ   হাসিনা  মেডিকেল   কলেজ,  হবিগঞ্জ", left, titleBaseLine,paint);
+        canvas.drawText("এমবিবিএস,   ডিসিএইচ,   এফসিপিএস", left, titleBaseLine, paint);
+        titleBaseLine += 15;
+        canvas.drawText("শেখ   হাসিনা  মেডিকেল   কলেজ,  হবিগঞ্জ", left, titleBaseLine, paint);
 
 
-        titleBaseLine = 60+30;
+        titleBaseLine = 60 + 30;
         paint.setTextSize(14);
-        canvas.drawText("চেম্বারঃ ", left_rightAl, titleBaseLine,paint);
-        titleBaseLine+=15;
+        canvas.drawText("চেম্বারঃ ", left_rightAl, titleBaseLine, paint);
+        titleBaseLine += 15;
         paint.setTextSize(15);
 
-       canvas.drawText("কনসালটেন্ট ডায়াগনস্টিক সেন্টার ", left_rightAl, titleBaseLine,paint);
-        titleBaseLine+=17;
+        canvas.drawText("কনসালটেন্ট ডায়াগনস্টিক সেন্টার ", left_rightAl, titleBaseLine, paint);
+        titleBaseLine += 17;
         paint.setTextSize(12);
-        canvas.drawText("পুরাতন পাসপোর্ট ভবন", left_rightAl, titleBaseLine,paint);
-        titleBaseLine+=15;
-        canvas.drawText("সদর হাসপাতাল সংলগ্ন, হবিগঞ্জ।", left_rightAl, titleBaseLine,paint);
-        titleBaseLine+=20;
+        canvas.drawText("পুরাতন পাসপোর্ট ভবন", left_rightAl, titleBaseLine, paint);
+        titleBaseLine += 15;
+        canvas.drawText("সদর হাসপাতাল সংলগ্ন, হবিগঞ্জ।", left_rightAl, titleBaseLine, paint);
+        titleBaseLine += 20;
         paint.setTextSize(15);
-        canvas.drawText("সময়ঃ বিকাল ৩টা - ৭টা ", left_rightAl, titleBaseLine,paint);
-        titleBaseLine+=10;
-
-
-
+        canvas.drawText("সময়ঃ বিকাল ৩টা - ৭টা ", left_rightAl, titleBaseLine, paint);
+        titleBaseLine += 10;
 
 
 //        paint.setTextSize(10);
@@ -988,25 +678,23 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         //canvas.drawText("Date- " + dateTextView.getText().toString(), 72*5, titleBaseLine, paint);
 
 
-
-       canvas.drawLine(72 * 0.1f, (float) (titleBaseLine), 72 * 8, (float) (titleBaseLine), paint);
-        titleBaseLine+=30;
-         paint.setTextSize(10);
-         canvas.drawText("সিরিয়ালঃ",72*5.5f, titleBaseLine, paint);
+        canvas.drawLine(72 * 0.1f, (float) (titleBaseLine), 72 * 8, (float) (titleBaseLine), paint);
+        titleBaseLine += 30;
+        paint.setTextSize(10);
+        canvas.drawText("সিরিয়ালঃ", 72 * 5.5f, titleBaseLine, paint);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("01716936334", 72*6.12f, titleBaseLine, paint);
+        canvas.drawText("01716936334", 72 * 6.12f, titleBaseLine, paint);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 
-        titleBaseLine+=15;
-        canvas.drawText("Reg. no." + ((TextView)findViewById(R.id.regNo)).getText().toString() + ", Date- " + dateTextView.getText().toString(),
-                72*5.5f, titleBaseLine, paint);
-        titleBaseLine-=15;
+        titleBaseLine += 15;
+        canvas.drawText("Reg. no." + ((TextView) findViewById(R.id.regNo)).getText().toString() + ", Date- " + dateTextView.getText().toString(),
+                72 * 5.5f, titleBaseLine, paint);
+        titleBaseLine -= 15;
         String lineOne = "";
 
 
-
-        if(!names.getText().toString().isEmpty()) {
-            lineOne+="Patient's name : "+names.getText().toString()+",   ";
+        if (!names.getText().toString().isEmpty()) {
+            lineOne += "Patient's name : " + names.getText().toString() + ",   ";
             //canvas.drawText("Patients name :   " + names.getText().toString(),leftTextStart, titleBaseLine, paint);
         }
 
@@ -1014,10 +702,10 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         if (!days.getText().toString().isEmpty() || !months.getText().toString().isEmpty()
                 || !years.getText().toString().isEmpty()) {
 
-            String yearsT = years.getText().toString().isEmpty()? "00" : years.getText().toString();
-            String monthsT = months.getText().toString().isEmpty()?"00" : months.getText().toString();
-            String daysT = days.getText().toString().isEmpty()?"00" : days.getText().toString();
-            lineOne +=     yearsT +
+            String yearsT = years.getText().toString().isEmpty() ? "00" : years.getText().toString();
+            String monthsT = months.getText().toString().isEmpty() ? "00" : months.getText().toString();
+            String daysT = days.getText().toString().isEmpty() ? "00" : days.getText().toString();
+            lineOne += yearsT +
                     " বছর  " + monthsT + " মাস  " + daysT + " দিন,   ";
 //            canvas.drawText("বয়স : " + yearsT +
 //                    " বছর  " + monthsT + " মাস  " + daysT + " দিন  ", leftTextStart, titleBaseLine, paint);
@@ -1028,19 +716,18 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         TextView txt = findViewById(R.id.weightGram);
         if (!weight.getText().toString().isEmpty() || !txt.getText().toString().isEmpty()) {
 
-            String weightKg = weight.getText().toString().isEmpty()? "00" : weight.getText().toString();
-            String weightGm = txt.getText().toString().isEmpty()? "00": txt.getText().toString();
-            lineOne += weightKg + " কেজি " + weightGm +" গ্রাম ";
+            String weightKg = weight.getText().toString().isEmpty() ? "00" : weight.getText().toString();
+            String weightGm = txt.getText().toString().isEmpty() ? "00" : txt.getText().toString();
+            lineOne += weightKg + " কেজি " + weightGm + " গ্রাম ";
 
         }
 
-        if(!lineOne.isEmpty()) {
+        if (!lineOne.isEmpty()) {
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             canvas.drawText(lineOne, left, titleBaseLine, paint);
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 
         }
-
 
 
         //titleBaseLine = titleBaseLine + lineGap;// done later
@@ -1051,12 +738,12 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
 
 
-        if(!isRegSavedOnce) {
+        if (!isRegSavedOnce) {
             sharedPreferences = getSharedPreferences("android.ztech.com.prescription.REG", context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("android.ztech.com.prescription.REG", ++regNo);
             editor.commit();
-            isRegSavedOnce=true;
+            isRegSavedOnce = true;
         }
 
 
@@ -1067,9 +754,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 //        paint.setTextSize(15);
 //        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         //canvas.drawText("প্রেসক্রিপশনটি পড়ে ঔষধ ব্যবহার করবেন", 72 * 0.8f,  titleBaseLine, paint);
-  //      paint.setTypeface(Typeface.DEFAULT);
-
-
+        //      paint.setTypeface(Typeface.DEFAULT);
 
 
 //        paint.setTextSize(12);
@@ -1087,12 +772,12 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
         if (!diagnosises2.getText().toString().isEmpty()) {
             paint.setTextSize(10);//text size updated from 8
-            int titleTop= titleBaseLine + 5;
-            titleBaseLine+= 24;
-            stringProcessorFlex("Patient's Note :  " + diagnosises2.getText().toString(),110);
-            for(int i = 0; i<linedAdvice.size();i++) {
+            int titleTop = titleBaseLine + 5;
+            titleBaseLine += 24;
+            stringProcessorFlex("Patient's Note :  " + diagnosises2.getText().toString(), 110);
+            for (int i = 0; i < linedAdvice.size(); i++) {
                 canvas.drawText(linedAdvice.get(i), 72 * 0.8f, titleBaseLine, paint);
-                titleBaseLine+= 12+ lineGap;
+                titleBaseLine += 12 + lineGap;
                 if (titleBaseLine >= 792) {
                     mPdfDocument.finishPage(page);
                     pageNumber++;
@@ -1100,18 +785,18 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                     page = mPdfDocument.startPage(pageNumber);
                 }
             }
-           // canvas.drawLine(72 * 0.8f, (float) (titleBaseLine), 72 * 8, (float) (titleBaseLine), paint);
+            // canvas.drawLine(72 * 0.8f, (float) (titleBaseLine), 72 * 8, (float) (titleBaseLine), paint);
             paint.setStyle(Paint.Style.STROKE);
-            canvas.drawRect(72 * 0.5f,titleTop,72*8,++titleBaseLine,paint);
+            canvas.drawRect(72 * 0.5f, titleTop, 72 * 8, ++titleBaseLine, paint);
 
             paint.setStyle(Paint.Style.FILL);
-            titleBaseLine+=42;
+            titleBaseLine += 42;
 
 
         }
 
         int i;
-        titleBaseLine+= 30;
+        titleBaseLine += 30;
 
 
         int invesTitleBaseLine = titleBaseLine;
@@ -1120,7 +805,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         if (doSympExist == true) {
             paint.setTextSize(12);
             paint.setUnderlineText(true);
-            canvas.drawText("উপসর্গ  :", left , titleBaseLine, paint);
+            canvas.drawText("উপসর্গ  :", left, titleBaseLine, paint);
             paint.setUnderlineText(false);
 
             titleBaseLine = titleBaseLine + 18;
@@ -1134,7 +819,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                     for (int j = 0; j <= linedAdvice.size() - 1; j++) {
 
                         if (j == 0) {
-                            canvas.drawText(Integer.toString(i + 1) + ") " + linedAdvice.get(j), left , titleBaseLine, paint);
+                            canvas.drawText(Integer.toString(i + 1) + ") " + linedAdvice.get(j), left, titleBaseLine, paint);
                             titleBaseLine = titleBaseLine + 8;
                             if (titleBaseLine >= 792) {
                                 mPdfDocument.finishPage(page);
@@ -1263,9 +948,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         paint.setUnderlineText(false);
 
         paint.setTextSize(11);
-        titleBaseLine += 18-72;
-        titleBaseLine+=18;
-
+        titleBaseLine += 18 - 72;
+        titleBaseLine += 18;
 
 
         int j;
@@ -1274,7 +958,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
 
             if (!autoCompleteTextView.getText().toString().isEmpty()) {
-                stringProcessorFlex(autoCompleteTextView.getText().toString(),100);
+                stringProcessorFlex(autoCompleteTextView.getText().toString(), 100);
                 for (j = 0; j <= linedAdvice.size() - 1; j++) {
 
                     if (j == 0) {
@@ -1302,9 +986,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                     }
 
 
-
                 }
-                titleBaseLine+=18;
+                titleBaseLine += 18;
             }
 
 
@@ -1324,15 +1007,15 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
             paint.setTextSize(12);
             paint.setUnderlineText(true);
-            canvas.drawText("পরামর্শ :", 72*0.8f, titleBaseLine, paint);
+            canvas.drawText("পরামর্শ :", 72 * 0.8f, titleBaseLine, paint);
             paint.setUnderlineText(false);
             titleBaseLine = titleBaseLine + 14;
             paint.setTextSize(11);
             if (advices.getText().toString() != null) {
-                stringProcessorFlex(advices.getText().toString(),100);
+                stringProcessorFlex(advices.getText().toString(), 100);
 
                 for (i = 0; i <= linedAdvice.size() - 1; i++) {
-                    canvas.drawText(linedAdvice.get(i), 72*0.8f, titleBaseLine, paint);
+                    canvas.drawText(linedAdvice.get(i), 72 * 0.8f, titleBaseLine, paint);
                     titleBaseLine = titleBaseLine + lineGap + 12;
                     if (titleBaseLine >= 792) {
                         mPdfDocument.finishPage(page);
@@ -1347,13 +1030,12 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
         paint.setTextSize(10);
         paint.setUnderlineText(false);
-      //  canvas.drawText("** চিকিৎসা চলাকালীন রোগী গুরুতর অসুস্থ হলে হাসপাতালে ভর্তি করবেন **",72 *2.25f, 72*11+18, paint);
-        canvas.drawText("** চিকিৎসা চলাকালীন রোগী গুরুতর অসুস্থ হলে হাসপাতালে ভর্তি করবেন **",72 *2.25f, 72*11+36, paint);
+        //  canvas.drawText("** চিকিৎসা চলাকালীন রোগী গুরুতর অসুস্থ হলে হাসপাতালে ভর্তি করবেন **",72 *2.25f, 72*11+18, paint);
+        canvas.drawText("** চিকিৎসা চলাকালীন রোগী গুরুতর অসুস্থ হলে হাসপাতালে ভর্তি করবেন **", 72 * 2.25f, 72 * 11 + 36, paint);
         mPdfDocument.finishPage(page);
 
         return pageNumber;
     }
-
 
     public void add_symptoms(View v) {
 
@@ -1377,8 +1059,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         int temp;
         symptom.setId(temp = idGenerator.generateViewId());
 
-        if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-        else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size()-1))+1,temp);
+        if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+        else
+            commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
 
         symptomIdArray.add(temp);
         symptom_container.addView(symptom, drugParamsMedium);
@@ -1414,7 +1097,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
     }
 
-
     private void add_symptoms(String[] symptomString) {
 
         for (int i = 0; i < symptomString.length; i++) {
@@ -1438,8 +1120,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             int temp;
             symptom.setId(temp = idGenerator.generateViewId());
 
-            if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-            else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size()-1))+1,temp);
+            if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+            else
+                commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
 
             symptomIdArray.add(temp);
             symptom_container.addView(symptom, drugParamsMedium);
@@ -1477,7 +1160,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
     }
 
-
     private void add_test(String[] testStrings) {
 
         for (int i = 0; i < testStrings.length; i++) {
@@ -1495,14 +1177,13 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             test.setId(temp = idGenerator.generateViewId());
 
 
+            if (investigationIdArray.isEmpty()) {
+                if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+                else
+                    commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
 
-            if(investigationIdArray.isEmpty())
-            {
-                if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-                else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
-
-            }
-            else commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
+            } else
+                commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
 
 
             investigationIdArray.add(temp);
@@ -1545,7 +1226,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
     }
 
-
     public void add_test(View v) {
 
 
@@ -1563,13 +1243,13 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         test.setId(temp = idGenerator.generateViewId());
 
 
-        if(investigationIdArray.isEmpty())
-        {
-            if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-            else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
+        if (investigationIdArray.isEmpty()) {
+            if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+            else
+                commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
 
-        }
-        else commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
+        } else
+            commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
 
         investigationIdArray.add(temp);
         test.setAdapter(testAdapter);
@@ -1608,7 +1288,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         //    }
     }
 
-
     public void create_new_drug(View v) {
 
 
@@ -1643,31 +1322,28 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         drugReq.addView(editButton, drugParamsMin);
 
 
-
-        final Spinner mSpinner = new Spinner(context,Spinner.MODE_DIALOG);
+        final Spinner mSpinner = new Spinner(context, Spinner.MODE_DIALOG);
         //defining drug text box
-
-
-
 
 
         int temp;
         final AutoCompleteTextView new_drug = new AutoCompleteTextView(this);
         new_drug.setAdapter(adapter);
-        new_drug.setId(temp=idGenerator.generateViewId());
+        new_drug.setId(temp = idGenerator.generateViewId());
         new_drug.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         new_drug.setSingleLine(false);
 
-        if(medicationIdArray.isEmpty()) {
+        if (medicationIdArray.isEmpty()) {
 
-            if(investigationIdArray.isEmpty())
-            {   if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-            else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
-            }
-            else commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
+            if (investigationIdArray.isEmpty()) {
+                if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+                else
+                    commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
+            } else
+                commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
 
-        }
-        else commonIdArray.add(commonIdArray.indexOf(medicationIdArray.get(medicationIdArray.size()-1))+1,temp);
+        } else
+            commonIdArray.add(commonIdArray.indexOf(medicationIdArray.get(medicationIdArray.size() - 1)) + 1, temp);
 
 
         medicationIdArray.add(temp);
@@ -1675,7 +1351,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         new_drug.setThreshold(1);
         new_drug.setTextSize(20);
         new_drug.setHint("Type in the drugs here....");
-
 
 
         mSpinner.setAdapter(shortcutsAdapter);
@@ -1686,7 +1361,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
 
 
                 new_drug.getText().insert(new_drug.getSelectionStart(), parent.getSelectedItem().toString());
@@ -1702,8 +1376,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         });
 
 
-        final Spinner quantSpinner = new Spinner(context,Spinner.MODE_DIALOG);
-        quantSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", " ১"," ০", " ২", " ৩", " আধা"}));
+        final Spinner quantSpinner = new Spinner(context, Spinner.MODE_DIALOG);
+        quantSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", " ১", " ০", " ২", " ৩", " আধা"}));
         quantSpinner.setSelection(0);
         quantSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         quantSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1720,9 +1394,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             }
         });
 
-        final Spinner mediumSpinner = new Spinner(context,Spinner.MODE_DIALOG);
+        final Spinner mediumSpinner = new Spinner(context, Spinner.MODE_DIALOG);
 
-        mediumSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "টা ", "চামচ ", "এম্পুল ", "মি.লি. ","ফোটা ", "লাগাবেন "}));
+        mediumSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "টা ", "চামচ ", "এম্পুল ", "মি.লি. ", "ফোটা ", "লাগাবেন "}));
         mediumSpinner.setSelection(0);
         mediumSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         mediumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1741,7 +1415,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         });
 
 
-        final Spinner hourSpinner = new Spinner(context,Spinner.MODE_DIALOG);
+        final Spinner hourSpinner = new Spinner(context, Spinner.MODE_DIALOG);
         hourSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৬ ঘন্টা অন্তর ", "৮ ঘন্টা অন্তর ", "১২ ঘন্টা অন্তর ", "রোজ ১ বার সন্ধ্যায় "}));
         hourSpinner.setSelection(0);
         hourSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -1761,8 +1435,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
         });
 
-        final Spinner daySpinner = new Spinner(context,Spinner.MODE_DIALOG);
-        daySpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৭ দিন ", "১৫ দিন ", "১ মাস ","চলবে "}));
+        final Spinner daySpinner = new Spinner(context, Spinner.MODE_DIALOG);
+        daySpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৭ দিন ", "১৫ দিন ", "১ মাস ", "চলবে "}));
         daySpinner.setSelection(0);
         daySpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1791,28 +1465,22 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         drugReq.addView(new_drug, drugParamsMedium);
 
 
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
 
 
                 int i;
                 String toBeEdited = new_drug.getText().toString();
 
 
-                if (!toBeEdited.isEmpty()&&loadedMedication.contains(toBeEdited)) {
+                if (!toBeEdited.isEmpty() && loadedMedication.contains(toBeEdited)) {
 
                     loadedMedication.remove(toBeEdited);
                     adapter = new ArrayAdapter<String>(context, R.layout.custom_item, R.id.autoCompleteItem, loadedMedication);
                     new_drug.setText("");
                     new_drug.setAdapter(adapter);
                     new PostTask().execute(toBeEdited);
-
-
 
 
                 } else if (!toBeEdited.isEmpty())
@@ -1863,21 +1531,16 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
-                if(hasFocus)
-                {
+                if (hasFocus) {
                     layout.addView(drugReqPart2);
                     layout.addView(mSpinner);
 
 
-                }
-
-                else
-                {
+                } else {
                     layout.removeView(mSpinner);
                     layout.removeView(drugReqPart2);
 
                 }
-
 
 
             }
@@ -1888,17 +1551,14 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         new_drug.requestFocus();
     }
 
-
-
-    public void waiting()
-    {
+    public void waiting() {
 
 
         //should be implemtnted if things get slower
 
 
-
     }
+
     private void create_new_drug(String[] drugStrings, String[] directionStrings) {
         for (int i = 0; i < drugStrings.length; i++) {
 
@@ -1931,29 +1591,29 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             editButton.setId(idGenerator.generateViewId());
             drugReq.addView(editButton, drugParamsMin);
 
-            final Spinner mSpinner = new Spinner(context,Spinner.MODE_DIALOG);
+            final Spinner mSpinner = new Spinner(context, Spinner.MODE_DIALOG);
             //defining drug text box
             final AutoCompleteTextView new_drug = new AutoCompleteTextView(this);
             new_drug.setAdapter(adapter);
             new_drug.setId(temp = idGenerator.generateViewId());
 
-            if(medicationIdArray.isEmpty()) {
+            if (medicationIdArray.isEmpty()) {
 
-                if(investigationIdArray.isEmpty())
-                {   if(symptomIdArray.isEmpty())commonIdArray.add(7,temp);
-                else commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
-                }
-                else commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
+                if (investigationIdArray.isEmpty()) {
+                    if (symptomIdArray.isEmpty()) commonIdArray.add(7, temp);
+                    else
+                        commonIdArray.add(commonIdArray.indexOf(symptomIdArray.get(symptomIdArray.size() - 1)) + 1, temp);
+                } else
+                    commonIdArray.add(commonIdArray.indexOf(investigationIdArray.get(investigationIdArray.size() - 1)) + 1, temp);
 
-            }
-            else commonIdArray.add(commonIdArray.indexOf(medicationIdArray.get(medicationIdArray.size()-1))+1,temp);
+            } else
+                commonIdArray.add(commonIdArray.indexOf(medicationIdArray.get(medicationIdArray.size() - 1)) + 1, temp);
 
             medicationIdArray.add(temp);
             new_drug.setThreshold(1);
             new_drug.setText(drugStrings[i]);
             new_drug.setTextSize(20);
             new_drug.setHint("Type in the drugs here....");
-
 
 
             mSpinner.setAdapter(shortcutsAdapter);
@@ -1978,8 +1638,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             });
 
 
-            final Spinner quantSpinner = new Spinner(context,Spinner.MODE_DIALOG);
-            quantSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", " ১"," ০"," ২", " ৩", " আধা"}));
+            final Spinner quantSpinner = new Spinner(context, Spinner.MODE_DIALOG);
+            quantSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", " ১", " ০", " ২", " ৩", " আধা"}));
             quantSpinner.setSelection(0);
             quantSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             quantSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1998,9 +1658,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
             });
 
-            final Spinner mediumSpinner = new Spinner(context,Spinner.MODE_DIALOG);
+            final Spinner mediumSpinner = new Spinner(context, Spinner.MODE_DIALOG);
             mediumSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2,
-                    new String[]{"", "টা ", "চামচ ", "এম্পুল ", "মি.লি.","ফোটা","লাগাবেন"}));
+                    new String[]{"", "টা ", "চামচ ", "এম্পুল ", "মি.লি.", "ফোটা", "লাগাবেন"}));
             mediumSpinner.setSelection(0);
             mediumSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             mediumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -2019,8 +1679,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             });
 
 
-            final Spinner hourSpinner = new Spinner(context,Spinner.MODE_DIALOG);
-            hourSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৪ ঘন্টা অন্তর ","৬ ঘন্টা অন্তর ", "৮ ঘন্টা অন্তর ", "১২ ঘন্টা অন্তর ", "রোজ একবার সন্ধ্যায় "}));
+            final Spinner hourSpinner = new Spinner(context, Spinner.MODE_DIALOG);
+            hourSpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৪ ঘন্টা অন্তর ", "৬ ঘন্টা অন্তর ", "৮ ঘন্টা অন্তর ", "১২ ঘন্টা অন্তর ", "রোজ একবার সন্ধ্যায় "}));
             hourSpinner.setSelection(0);
             hourSpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             hourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -2037,8 +1697,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                 }
             });
 
-            final Spinner daySpinner = new Spinner(context,Spinner.MODE_DIALOG);
-            daySpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৭ দিন ", "১৫ দিন ", "১ মাস ","চলবে "}));
+            final Spinner daySpinner = new Spinner(context, Spinner.MODE_DIALOG);
+            daySpinner.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, new String[]{"", "৭ দিন ", "১৫ দিন ", "১ মাস ", "চলবে "}));
             daySpinner.setSelection(0);
             daySpinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -2064,9 +1724,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             drugReq.addView(new_drug, drugParamsMedium);
 
 
-
-
-
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -2085,9 +1742,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                         new PostTask().execute(toBeEdited);
 
 
-
-                    }
-                    else if (!toBeEdited.isEmpty())
+                    } else if (!toBeEdited.isEmpty())
                         Toast.makeText(context, "Deletion failed, App's drug or Unsaved", Toast.LENGTH_LONG).show();
 
 
@@ -2119,21 +1774,16 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
 
-                    if(hasFocus)
-                    {
+                    if (hasFocus) {
 
                         layout.addView(drugReqPart2);
                         layout.addView(mSpinner);
 
-                    }
-
-                    else
-                    {
+                    } else {
                         layout.removeView(mSpinner);
                         layout.removeView(drugReqPart2);
 
                     }
-
 
 
                 }
@@ -2151,14 +1801,9 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
     }
 
-
     public void print(View view) {
 
-        String advice="", name="", diagnosis="", symptom="", medication="", investigation = "";
-
-
-
-
+        String advice = "", name = "", diagnosis = "", symptom = "", medication = "", investigation = "";
         drawAndComputePages();
 
 
@@ -2180,7 +1825,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
         if (!loadedAdvice.contains(advice)) {
             loadedAdvice.add(advice);
-            adviceAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
+            adviceAdapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
             advices.setAdapter(adviceAdapter);
             advice = advice + "\n";
 
@@ -2261,14 +1906,11 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             }
 
 
-        }
-
-
-        else diagnosises.setText("");
+        } else diagnosises.setText("");
 
         if (!loadedDiagnosis2.contains(diagnosises2.getText().toString())) {
             loadedDiagnosis2.add(diagnosises2.getText().toString());
-            diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2,  loadedDiagnosis2);
+            diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedDiagnosis2);
             diagnosises2.setAdapter(diag2Adapter);
 
 
@@ -2376,7 +2018,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
             prescription += medication + "$";
 
 
-            if ( medication.isEmpty() || loadedMedication.contains(medication)) continue;
+            if (medication.isEmpty() || loadedMedication.contains(medication)) continue;
             else {
 
                 loadedMedication.add(userSaveDrugLastIndex, medication);
@@ -2403,7 +2045,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         } else prescription += "$$";
 
 
-        prescription += advices.getText().toString();
+        prescription += advices.getText().toString()+"$$"+diagnosises2.getText().toString();
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription." + diagnosises.getText().toString(), context.MODE_PRIVATE);
@@ -2411,19 +2053,23 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         editor.putString("android.ztech.com.prescription." + diagnosises.getText().toString(), prescription);
         editor.commit();
 
-
-
-
+//        if(!names.getText().toString().isEmpty()) {
+//            prescription +="$$" + diagnosises2.getText().toString();
+//            sharedPreferences = getSharedPreferences("android.ztech.com.prescription." + names.getText().toString(), context.MODE_PRIVATE);
+//            editor = sharedPreferences.edit();
+//            editor.putString("android.ztech.com.prescription." + names.getText().toString(), prescription);
+//            editor.commit();
+//        }
 
         sharedPreferences = getSharedPreferences("android.ztech.com.prescription.REG", context.MODE_PRIVATE);
         final int regNo = (sharedPreferences.getInt("android.ztech.com.prescription.REG", 1));
         final String regNoString = Integer.toString(regNo);
 
 
-        prescription = regNoString + "$$" + names.getText().toString() + "$$" + patientcell.getText().toString()
-                +"$$"+diagnosises2.getText().toString()
-                + "$$" + years.getText().toString() + "$$" + months.getText().toString() + "$$" +
-                days.getText().toString() + "$$" + weight.getText().toString() + prescription;
+//        prescription = regNoString + "$$" + names.getText().toString() + "$$" + patientcell.getText().toString()
+//                +"$$"+diagnosises2.getText().toString()
+//                + "$$" + years.getText().toString() + "$$" + months.getText().toString() + "$$" +
+//                days.getText().toString() + "$$" + weight.getText().toString() + prescription;
 
         //        sharedPreferences = getSharedPreferences(
         //                regNoString + names.getText().toString() + patientcell.getText().toString()
@@ -2546,11 +2192,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         //            }
 
 
-
         savePresForSharing();
-
-
-
 
 
         //String temp = ((names.getText().toString() + diagnosises2.getText().toString()).toLowerCase()).replaceAll(" ", "");
@@ -2559,8 +2201,8 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         String addressRelative = regNoString + temp + patientcell.getText().toString();
 
         File imagePath = new File(getFilesDir(), "images");
-        File newFile = new File(imagePath, "/doc"+addressRelative+".pdf");
-        Uri contentUri = FileProvider.getUriForFile(context,"android.ztech.com.prescription", newFile);
+        File newFile = new File(imagePath, "/doc" + addressRelative + ".pdf");
+        Uri contentUri = FileProvider.getUriForFile(context, "android.ztech.com.prescription", newFile);
         SharedPreferences sharedPref = getDefaultSharedPreferences(getApplicationContext());
         editor = sharedPref.edit();
         editor.putString("addressRelative", addressRelative);
@@ -2585,13 +2227,12 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 //            }
 
 
-
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
             shareIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-            shareIntent.createChooser(shareIntent,"Share your prescription");
+            shareIntent.createChooser(shareIntent, "Share your prescription");
 //
 ////            Button b = (Button)view;
 ////            if(b.getText().toString().equals("share")){
@@ -2599,7 +2240,7 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 ////                shareIntent = Intent.createChooser(shareIntent,"Share your prescription");
 ////            }
 //
-         //   startService(new Intent(MainActivity.this, ChatHeadService.class));
+            //   startService(new Intent(MainActivity.this, ChatHeadService.class));
 
             try {
                 startActivity(shareIntent);
@@ -2614,34 +2255,28 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
     }
 
+    public void quickScrolling(View view) {
+        Button b = (Button) view;
 
-    public void quickScrolling(View view)
-    {
-        Button b = (Button)view;
-
-        if(isInTouchMode) {
+        if (isInTouchMode) {
 
             if (b.getText().toString().equals("Next")) {
 
-                if(!(commonIdArray.indexOf(focusedTextField.getId())==commonIdArray.size()-1)) {
+                if (!(commonIdArray.indexOf(focusedTextField.getId()) == commonIdArray.size() - 1)) {
                     int viewId = commonIdArray.get(commonIdArray.indexOf(focusedTextField.getId()) + 1);
                     View v = findViewById(viewId);
                     v.requestFocus();
                 }
 
-            }
+            } else {
 
-
-            else {
-
-                if(!(commonIdArray.indexOf(focusedTextField.getId())==0)) {
+                if (!(commonIdArray.indexOf(focusedTextField.getId()) == 0)) {
                     View v = findViewById(commonIdArray.get(commonIdArray.indexOf(focusedTextField.getId()) - 1));
 
                     v.requestFocus();
                 }
 
             }
-
 
 
         }
@@ -2653,53 +2288,52 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         Intent intent = new Intent();
         intent.setClass(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
 
 
     }
 
-    public void deleteDiagSugg(View v){
+    public void deleteDiagSugg(View v) {
 
         AutoCompleteTextView a = findViewById(R.id.thePrintedOne);
         String toBeEdited = a.getText().toString();
 
-        if (!toBeEdited.isEmpty()&&loadedDiagnosis2.contains(toBeEdited)) {
+        if (!toBeEdited.isEmpty() && loadedDiagnosis2.contains(toBeEdited)) {
             a.setText("");
             loadedDiagnosis2.remove(toBeEdited);
-            diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2,  loadedDiagnosis2);
+            diag2Adapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedDiagnosis2);
             a.setAdapter(diag2Adapter);
             new deleteDiag().execute();
-        }
-
-        else   Toast.makeText(this, "Deletion failed, this wasn't saved",Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "Deletion failed, this wasn't saved", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void deleteAdvices(View v){
+    public void deleteAdvices(View v) {
 
         AutoCompleteTextView a = findViewById(R.id.advices);
         String toBeEdited = a.getText().toString();
 
-        if (!toBeEdited.isEmpty()&&loadedAdvice.contains(toBeEdited)) {
+        if (!toBeEdited.isEmpty() && loadedAdvice.contains(toBeEdited)) {
             a.setText("");
             loadedAdvice.remove(toBeEdited);
-            adviceAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
+            adviceAdapter = new ArrayAdapter<String>(this, R.layout.custom_item_2, R.id.autoCompleteItem2, loadedAdvice);
             a.setAdapter(adviceAdapter);
 
             new deleteAdviceSugg().execute();
-        }
-
-        else   Toast.makeText(this, "Deletion failed, this wasn't saved",Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "Deletion failed, this wasn't saved", Toast.LENGTH_SHORT).show();
 
 
     }
-
 
     public void deleteCache(Context context) {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean deleteDir(File dir) {
@@ -2712,16 +2346,14 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;
         }
     }
 
-
-    private void savePresForSharing()
-    {
+    private void savePresForSharing() {
         SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription.REG", context.MODE_PRIVATE);
         final int regNo = sharedPreferences.getInt("android.ztech.com.prescription.REG", 1);
         final String regNoString = Integer.toString(regNo);
@@ -2731,7 +2363,6 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
 
 
             String temp = (names.getText().toString()).replaceAll(" ", "");
-
 
 
             temp = temp.replaceAll("\n", "");
@@ -2764,20 +2395,235 @@ public class MainActivity extends AppCompatActivity  implements PasswordDialog.O
         }
 
 
-
-
     }
 
-    public void delAutoPrescribe(View v)
-    {
+    public void delAutoPrescribe(View v) {
 
-        if(loadedDiagnosis.contains(diagnosises.getText().toString()))
-        {
+        if (loadedDiagnosis.contains(diagnosises.getText().toString())) {
             loadedDiagnosis.remove(diagnosises.getText().toString());
             diagnosises.setText("");
-            diagnosisAdapter =  new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedDiagnosis);
+            diagnosisAdapter = new ArrayAdapter<String>(this, R.layout.custom_item, R.id.autoCompleteItem, loadedDiagnosis);
             diagnosises.setAdapter(diagnosisAdapter);
             new PostTask2().execute("");
+        }
+    }
+
+    private class PostTask2 extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarVisibility(true);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String toBeEdited = params[0];
+
+
+            if (loadedDiagnosis.size() == 0) {
+                try {
+
+
+                    FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_PRIVATE);
+
+                    fos.write("".getBytes());
+                    fos.close();
+
+
+                } catch (Exception e) {
+
+                }
+            } else {
+                for (int i = 0; i < loadedDiagnosis.size(); i++) {
+
+                    if (i == 0) {
+                        try {
+
+
+                            FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_PRIVATE);
+
+                            fos.write((loadedDiagnosis.get(i) + "\n").getBytes());
+                            fos.close();
+
+
+                        } catch (Exception e) {
+
+                        }
+
+                    } else {
+                        try {
+
+
+                            FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS, context.MODE_APPEND);
+
+                            fos.write((loadedDiagnosis.get(i) + "\n").getBytes());
+                            fos.close();
+
+
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressBarVisibility(false);
+
+
+        }
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private class deleteDiag extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarVisibility(true);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            try {
+                FileOutputStream fos = openFileOutput(FILENAME_DIAGNOSIS_2, context.MODE_PRIVATE);
+
+                for (int i = 0; i < loadedDiagnosis2.size(); i++) {
+
+                    fos.write((loadedDiagnosis2.get(i) + "\n").getBytes());
+                }
+
+                fos.close();
+
+
+            } catch (Exception e) {
+            }
+
+
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressBarVisibility(false);
+        }
+    }
+
+    private class deleteAdviceSugg extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarVisibility(true);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            try {
+                FileOutputStream fos = openFileOutput(FILENAME_ADVICE, context.MODE_PRIVATE);
+
+                for (int i = 0; i < loadedAdvice.size(); i++) {
+
+                    fos.write((loadedAdvice.get(i) + "\n").getBytes());
+                }
+
+                fos.close();
+
+
+            } catch (Exception e) {
+            }
+
+
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressBarVisibility(false);
+        }
+    }
+
+    // The definition of our task class
+    private class PostTask extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarVisibility(true);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String toBeEdited = params[0];
+
+
+            //loadedMedication.removeAll(Arrays.asList(getResources().getStringArray(R.array.med)));
+
+            try {
+                FileOutputStream fos = openFileOutput(FILENAME_MEDICATIONS, context.MODE_PRIVATE);
+
+                for (int i = 0; i < userSaveDrugLastIndex; i++) {
+
+                    fos.write((loadedMedication.get(i) + "\n").getBytes());
+                }
+
+                fos.close();
+
+
+            } catch (Exception e) {
+            }
+            //loadedMedication.addAll(Arrays.asList(getResources().getStringArray(R.array.med)));
+
+
+            return "All Done!";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressBarVisibility(false);
         }
     }
 }
