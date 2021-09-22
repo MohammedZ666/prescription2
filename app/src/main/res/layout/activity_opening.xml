@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat"
+    tools:context="android.ztech.com.prescription.openingActivity">
+
+    <LinearLayout
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timer"
+            android:textSize="20sp"
+            android:textColor="#000000"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:id="@+id/createPres"
+            android:text="Create new Prescription"
+            android:onClick="startActivityMain"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_weight="1"
+                android:id="@+id/searchPres"
+                android:text="Search prescription"
+                android:onClick="startActivitySearchPrescription" />
+
+
+
+
+
+            <!--<Button
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:id="@+id/advertisement"
+                android:text="Advertisement"
+            android:onClick="startActivityManageShortcuts" />-->
+
+        </LinearLayout>
+
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/email"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="130dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:onClick="startActivityEmail"-->
+                <!--android:text="backup" />-->
+
+              <!--<Button-->
+                  <!--android:layout_width="0dp"-->
+                  <!--android:layout_height="150dp"-->
+                  <!--android:id="@+id/monthlyIncome"-->
+                  <!--android:layout_weight="1"-->
+                  <!--android:text="Monthly Income"-->
+                  <!--android:onClick="startActivityMonthlyIncome"/>-->
+              <!--<Button-->
+                  <!--android:layout_width="0dp"-->
+                  <!--android:layout_height="150dp"-->
+                  <!--android:id="@+id/monthlyExpense"-->
+                  <!--android:layout_weight="1"-->
+                  <!--android:text="Monthly Expense"-->
+                  <!--android:onClick="startActivityExpenseCalulation"/>-->
+
+              <!--<Button-->
+                  <!--android:layout_width="0dp"-->
+                  <!--android:layout_height="150dp"-->
+                  <!--android:id="@+id/perItemIncome"-->
+                  <!--android:layout_weight="1"-->
+                  <!--android:text="Income per test"-->
+                  <!--android:onClick="startActivityExpensePerItem"/>-->
+
+        <!--</LinearLayout>-->
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="5dp">-->
+
+        <!--</LinearLayout>-->
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <ProgressBar
+               android:id="@+id/progressBarOpening"
+               style="@android:style/Widget.Holo.ProgressBar"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+
+               android:layout_alignParentTop="true"
+               android:layout_centerHorizontal="true"
+               android:visibility="gone" />
+       </RelativeLayout>
+        
+    </LinearLayout>
+
+</ScrollView>

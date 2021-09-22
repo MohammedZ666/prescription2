@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "539433558762",
+    "firebase_url": "https://prescription2-8fbcb.firebaseio.com",
+    "project_id": "prescription2-8fbcb",
+    "storage_bucket": "prescription2-8fbcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539433558762:android:1571a07df7784246",
+        "android_client_info": {
+          "package_name": "android.ztech.com.prescription"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539433558762-nklpvu5elm1c7co9ragf8n8q0ukastg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.ztech.com.prescription",
+            "certificate_hash": "a8680d8e33227757d542e09a70bb51234eed787c"
+          }
+        },
+        {
+          "client_id": "539433558762-58kplgkmullu9ols83nk24q06jq3gc2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXnuph8WYKtF2f690i8H912sPqZA0k-Ww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539433558762-2puqgp6u4u176hoie8qirjtlvf9bquhh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

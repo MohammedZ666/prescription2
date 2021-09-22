@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:paddingRight="15dp"
+    android:id="@+id/scrollView"
+    tools:context="android.ztech.com.prescription.MainActivity">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:id="@+id/Wholeprint"
+            android:orientation="vertical">
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:id="@+id/printPagePart">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/dateTextView"
+                    android:layout_gravity="right" />
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:id="@+id/searchLayout">-->
+                <!--<EditText-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/searchEditTextMain"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+                <!--<Button-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="search"-->
+                <!--android:id="@+id/searchButtonMain"-->
+                <!--android:onClick="searchPresMain"/>-->
+                <!--</LinearLayout>-->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="left">
+
+
+
+
+                    <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/regNo"
+                        android:textSize="16sp"
+                        android:textColor= "#000000"/>
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Auto Prescribe :"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16dp"
+                        android:textStyle="bold"/>
+                    <AutoCompleteTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:layout_marginRight="16dp"
+
+                        android:textSize="25dp"
+                        android:completionThreshold="1"
+                        android:id="@+id/DiagnosisSave"/>
+                    <!--<Button-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="AP"-->
+                    <!--android:id="@+id/autoPrescribe"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--android:onClick="autoPrescribe" />-->
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Age :"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                    <EditText
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:layout_marginTop="27dp"
+                        android:layout_marginLeft="16dp"
+                        android:id="@+id/day_save"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:textSize="22sp"
+                        android:text="years"/>
+                    <EditText
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:layout_marginTop="27dp"
+                        android:layout_marginLeft="16dp"
+                        android:id="@+id/months_save"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:textSize="22sp"
+                        android:text="months"
+                        />
+
+
+
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:layout_marginTop="27dp"
+                        android:layout_marginLeft="16dp"
+                        android:id="@+id/years_save"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:textSize="22sp"
+                        android:text="days"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_marginTop="27dp"
+                        android:text="Weight"/>
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:layout_marginTop="27dp"
+                        android:id="@+id/weight_save"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:textSize="12sp"
+                        android:text="Kg"/>
+                </LinearLayout>
+
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginBottom="20dp">-->
+
+
+                <!--<CheckBox-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="23dp"-->
+                <!--android:text="Male"/>-->
+                <!--<CheckBox-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="23dp"-->
+                <!--android:layout_marginLeft="40dp"-->
+                <!--android:text="Female"/>-->
+
+                <!--</LinearLayout>-->
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/symptoms"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Symptoms:"/>
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Add Symptoms"
+                    android:id="@+id/Add_symptoms_Save"
+                    android:textAllCaps="false"
+                    android:onClick="add_symptoms" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/tests">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:text="Investigation :"/>
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Add Test"
+                    android:id="@+id/Add_Test_Save"
+                    android:textAllCaps="false"
+                    android:onClick="add_test" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/AddMedLayout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medications :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+
+
+
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Add drug"
+                android:id="@+id/Add_drug_Save"
+                android:textAllCaps="false"
+                android:onClick="create_new_drug" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/lastPrintpart">
+                <TextView
+                    android:layout_marginTop="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Advice:"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/advices_Save"/>
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/emergency_Save"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <!--<TextView-->
+
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Report after:"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:textStyle="bold"/>-->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!--<EditText-->
+                        <!--android:layout_width="32dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:inputType="number"-->
+
+                        <!--android:layout_marginLeft="16dp"-->
+                        <!--android:id="@+id/REPORTDAYS"-->
+                        <!--/>-->
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+
+                        <!--android:textSize="22sp"-->
+                        <!--android:text="days"/>-->
+
+                        <!--<EditText-->
+                        <!--android:layout_width="32dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:inputType="number"-->
+
+                        <!--android:layout_marginLeft="16dp"-->
+                        <!--android:id="@+id/REPORTAFTERMONTHS"-->
+                        <!--/>-->
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+
+                        <!--android:textSize="22sp"-->
+                        <!--android:text="months"/>-->
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:textSize="30sp"
+                android:text="Print"
+                android:id="@+id/print_Save"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                android:onClick="print"
+                />
+
+
+
+            <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:textSize="30sp"-->
+            <!--android:text="Reset"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:onClick="nextPatient"-->
+            <!--/>-->
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
