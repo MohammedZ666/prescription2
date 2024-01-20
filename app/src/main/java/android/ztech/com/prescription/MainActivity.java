@@ -654,7 +654,7 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         paint.setTextSize(12);
         canvas.drawText("এমবিবিএস,   ডিসিএইচ,   এফসিপিএস", left, titleBaseLine, paint);
         titleBaseLine += 15;
-        canvas.drawText("শেখ   হাসিনা  মেডিকেল   কলেজ,  হবিগঞ্জ", left, titleBaseLine, paint);
+//        canvas.drawText("শেখ   হাসিনা  মেডিকেল   কলেজ,  হবিগঞ্জ", left, titleBaseLine, paint);
 
 
         titleBaseLine = 60 + 30;
