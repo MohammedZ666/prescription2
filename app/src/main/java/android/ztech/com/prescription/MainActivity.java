@@ -134,7 +134,21 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         }
 
     }
-
+    private String[] loadAddress(){
+//        canvas.drawText("কনসালটেন্ট ডায়াগনস্টিক সেন্টার ", left_rightAl, titleBaseLine, paint);
+//        titleBaseLine += 17;
+//        paint.setTextSize(12);
+//        canvas.drawText("পুরাতন পাসপোর্ট ভবন", left_rightAl, titleBaseLine, paint);
+//        titleBaseLine += 15;
+//        canvas.drawText("সদর হাসপাতাল সংলগ্ন, হবিগঞ্জ।", left_rightAl, titleBaseLine, paint);
+//        titleBaseLine += 20;
+//        paint.setTextSize(15);
+//        canvas.drawText("সময়ঃ বিকাল ৩টা - ৭টা ", left_rightAl, titleBaseLine, paint);
+        SharedPreferences sharedPreferences = getSharedPreferences("android.ztech.com.prescription.PHYSICIAN_ADDRESS", MODE_PRIVATE);
+        String address = sharedPreferences.getString("address", "কনসালটেন্ট ডায়াগনস্টিক সেন্টার $$পুরাতন পাসপোর্ট ভবন$$সদর হাসপাতাল সংলগ্ন, হবিগঞ্জ।$$সময়ঃ বিকাল ৩টা - ৭টা ");
+        assert address != null;
+        return  address.split("\\$\\$");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -649,15 +663,16 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         titleBaseLine += 15;
         paint.setTextSize(15);
 
-        canvas.drawText("কনসালটেন্ট ডায়াগনস্টিক সেন্টার ", left_rightAl, titleBaseLine, paint);
+        String[] timeAndAddress = loadAddress();
+        canvas.drawText(timeAndAddress[0], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 17;
         paint.setTextSize(12);
-        canvas.drawText("পুরাতন পাসপোর্ট ভবন", left_rightAl, titleBaseLine, paint);
+        canvas.drawText(timeAndAddress[1], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 15;
-        canvas.drawText("সদর হাসপাতাল সংলগ্ন, হবিগঞ্জ।", left_rightAl, titleBaseLine, paint);
+        canvas.drawText(timeAndAddress[2], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 20;
         paint.setTextSize(15);
-        canvas.drawText("সময়ঃ বিকাল ৩টা - ৭টা ", left_rightAl, titleBaseLine, paint);
+        canvas.drawText(timeAndAddress[3], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 10;
 
 

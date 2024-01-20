@@ -664,6 +664,11 @@ private void authenticateTheUser(final String userMail)
         startActivity(intentImplicit);
     }
 
+    public void startActivitySaveAddress(View view)
+    {
+        Intent intentImplicit= new Intent(this, SaveAddress.class);
+        startActivity(intentImplicit);
+    }
 
 
     public void startActivitySearchPrescription(View view)
