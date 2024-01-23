@@ -465,7 +465,7 @@ private void authenticateTheUser(final String userMail)
 
 
         Intent intent = new Intent(this, TimeTickRegisterer.class);
-        PendingIntent pintent = PendingIntent.getService(this, 0, intent, 0);
+        PendingIntent pintent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, pintent);
 

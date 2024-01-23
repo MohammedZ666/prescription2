@@ -647,32 +647,32 @@ public class MainActivity extends AppCompatActivity implements PasswordDialog.On
         float leftTextStart = left + 72 * 0.3f;
         paint.setTextSize(16);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("অধ্যক্ষ  ডাঃ   মোঃ   আবু   সুফিয়ান", left, titleBaseLine, paint);
+//        canvas.drawText("অধ্যক্ষ  ডাঃ   মোঃ   আবু   সুফিয়ান", left, titleBaseLine, paint);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 
         titleBaseLine += 20;
         paint.setTextSize(12);
-        canvas.drawText("এমবিবিএস,   ডিসিএইচ,   এফসিপিএস", left, titleBaseLine, paint);
+//        canvas.drawText("এমবিবিএস,   ডিসিএইচ,   এফসিপিএস", left, titleBaseLine, paint);
         titleBaseLine += 15;
 //        canvas.drawText("শেখ   হাসিনা  মেডিকেল   কলেজ,  হবিগঞ্জ", left, titleBaseLine, paint);
 
 
         titleBaseLine = 60 + 30;
         paint.setTextSize(14);
-        canvas.drawText("চেম্বারঃ ", left_rightAl, titleBaseLine, paint);
+//        canvas.drawText("চেম্বারঃ ", left_rightAl, titleBaseLine, paint);
         titleBaseLine += 15;
         paint.setTextSize(15);
 
-        String[] timeAndAddress = loadAddress();
-        canvas.drawText(timeAndAddress[0], left_rightAl, titleBaseLine, paint);
+//        String[] timeAndAddress = loadAddress();
+//        canvas.drawText(timeAndAddress[0], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 17;
         paint.setTextSize(12);
-        canvas.drawText(timeAndAddress[1], left_rightAl, titleBaseLine, paint);
+//        canvas.drawText(timeAndAddress[1], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 15;
-        canvas.drawText(timeAndAddress[2], left_rightAl, titleBaseLine, paint);
+//        canvas.drawText(timeAndAddress[2], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 20;
         paint.setTextSize(15);
-        canvas.drawText(timeAndAddress[3], left_rightAl, titleBaseLine, paint);
+//        canvas.drawText(timeAndAddress[3], left_rightAl, titleBaseLine, paint);
         titleBaseLine += 10;
 
 
